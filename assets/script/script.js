@@ -1,57 +1,60 @@
-let words = [
-    "apple",
-    "cat",
-    "woods",
-    "music",
-    "television"
-];
+let words = ["apple", "cat", "woods", "music", "television" ];
 
 let wordH = document.getElementById("wordH");       // box mot caché
 let letters = document.getElementById("letters");   // box btn/alpha
 let wordToDevine = words[Math.floor(Math.random() * words.length)]; // init du mot à deviner
 
-wordH.innerHTML += wordToDevine.replace(RegExp("([a-z])","g"),"·"); // for (let i = 0; i < wordToDevine.length; i++) { wordH.innerHTML += "·" }  // ajout des _ en fonction du mot
+wordH.innerHTML += wordToDevine.replace(RegExp("([a-z])", "g"), "_ "); // for (let i = 0; i < wordToDevine.length; i++) { wordH.innerHTML += "·" }  // ajout des _ en fonction du mot
 
 let alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 for (let i = 0; i < alpha.length; i++) { letters.innerHTML += "<button id= btn" + (i + 1) + " value=\"" + (i + 1) + "\">" + alpha[i] + "</button>" }
 
-let lettersGuess="";    // recup les lettres deja trouvées
-let count = 0;          // compte le nombre de raté
+let lettersGuess = "";                                                                                      // recup les lettres deja trouvées pour la regex
+let count = 0;                                                                                              // compte le nombre de raté
+for (let i = 0; i < letters.children.length; i++) {                                                         // pour ch elem boutons
+    const btn = letters.children[i];                                                                        // stocke l'ind du bouton 
+    const btnLetter = btn.textContent;                                                                      // stocke la lettre du bouton
+    let continueGame = 1;                                                                                   // SI continueGamme...
+    
+    if (continueGame) {                                                                                     // ...est vrai.. le jeu continue...
 
-    for (let i = 0; i < letters.children.length; i++) {
-        const btn = letters.children[i];
-        const btnLetter = btn.textContent;
+        btn.addEventListener("click", function () {                                                         // pour chaque clic sur un bouton lettre
+            if ((document.getElementById("btn" + (i + 1)).getAttribute("find")) === "1") { alert("letter already found!") }         // SI la lettre n'a pas déjà été trouvée
+            if ((document.getElementById("btn" + (i + 1)).getAttribute("find")) === "0") { alert("Letter has already been tested!") }// SI la lettre n'a pas déjà été testée 
 
-        btn.addEventListener("click", function () { // pour chaque clic sur un bouton lettre
-            if ( wordToDevine.includes(btnLetter)){
-                if( (document.getElementById("btn" + (i +1)).getAttribute("find")) === "1") { alert("letter already found!") }
-                wordH.innerHTML=""; // init du wordH
-                lettersGuess += btnLetter;
-                wordH.innerHTML += wordToDevine.replace(RegExp("[^"+lettersGuess+"]" ,"g"), "·"); 
-                document.getElementById("btn" + (i + 1)).style.backgroundColor = "green";
-                document.getElementById("btn" + (i + 1)).style.color = "white";     
-                document.getElementById("btn" + (i + 1)).setAttribute("find","1");
+            if (wordToDevine.includes(btnLetter)) {                                                         // SI la lettre est dans le mot caché
+                wordH.innerHTML = "";                                                                       // init de l'affichahe du wordH
+                lettersGuess += btnLetter;                                                                  // stocke la lettre
+                wordH.innerHTML += wordToDevine.replace(RegExp("[^" + lettersGuess + "]", "g"), "_ ");      // remplace le _ par la lettre trouvée
+                document.getElementById("btn" + (i + 1)).style.backgroundColor = "green";                   // def style
+                document.getElementById("btn" + (i + 1)).style.color = "white";                             // def style
+                document.getElementById("btn" + (i + 1)).setAttribute("find", "1");                         // Ajout attribut 'find'
+
             }
-            else { 
-                if( (document.getElementById("btn" + (i +1)).getAttribute("find")) === "0") { alert("Letter has already been tested!") }
-                else{
-                    count+=1;
-                    document.querySelector("img").setAttribute("src", "./assets/img/Hang"+String(count)+".png");
-                    document.getElementById("btn" + (i + 1)).style.color = "white";     
+            else    {                                                                    
+                if (wordH.textContent === wordToDevine) {
+                    endGame("win");
+                    console.log("WIN" + wordH.textContent + " " + wordToDevine)
+                    continueGame = 0;
+                }
+                if ((wordH.textContent !== wordToDevine) && (count < 10)){
+                    count += 1;
+                    if (count < 10) { document.querySelector("img").setAttribute("src", "./assets/img/Hang" + String(count) + ".png"); }
+                    document.getElementById("btn" + (i + 1)).style.color = "white";
                     document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";
-                    document.getElementById("btn" + (i + 1)).setAttribute("find","0");
+                    document.getElementById("btn" + (i + 1)).setAttribute("find", "0");
+                }
+                if ((count === 10) && (wordH.textContent !== wordToDevine)) {
+                    endGame("lose");
+                    continueGame = 0;
                 }
             }
-            console.log("count = " + count)
-            console.log(wordH.textContent + " " + wordToDevine)
-            if (count === 10) { endGame("lose"); } 
-            if (wordH.textContent === wordToDevine) { endGame("win"); }
         })
     }
-
-    function endGame (result) {
-        if (result === "lose") { alert("HANGMAN !") }
-        if (result === "win") { alert("You Win!") }
-        }
-    
-console.log(wordToDevine)
+    console.log("CG = " + continueGame)
+}
+function endGame(result) {
+    continueGame = 0;
+    if (result === "win") { alert("YOU WIN !"); }
+    if (result === "lose") { alert("YOU LOOSE !"); }
+}
