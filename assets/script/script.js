@@ -16,36 +16,42 @@ let alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n
 for (let i = 0; i < alpha.length; i++) { letters.innerHTML += "<button id= btn" + (i + 1) + " value=\"" + (i + 1) + "\">" + alpha[i] + "</button>" }
 
 let lettersGuess="";    // recup les lettres deja trouvées
-let count = 0;          // compte le nombre d'essais
+let count = 0;          // compte le nombre de raté
 
-for (let i = 0; i < letters.children.length; i++) {
-    const btn = letters.children[i];
-    const btnLetter = btn.textContent;
-    btn.addEventListener("click", function () {
-        count+=1;
-        // let reg = RegExp("("+btnLetter+"?)", "g")
-        if ( wordToDevine.includes(btnLetter)){
-            if( (document.getElementById("btn" + (i +1)).getAttribute("find")) === "1") {  
-                alert("letter already found!")
-                count-=1; // décrémente le compteur si la lettre a déjà été trouvée
+    for (let i = 0; i < letters.children.length; i++) {
+        const btn = letters.children[i];
+        const btnLetter = btn.textContent;
+
+        btn.addEventListener("click", function () { // pour chaque clic sur un bouton lettre
+            if ( wordToDevine.includes(btnLetter)){
+                if( (document.getElementById("btn" + (i +1)).getAttribute("find")) === "1") { alert("letter already found!") }
+                wordH.innerHTML=""; // init du wordH
+                lettersGuess += btnLetter;
+                wordH.innerHTML += wordToDevine.replace(RegExp("[^"+lettersGuess+"]" ,"g"), "·"); 
+                document.getElementById("btn" + (i + 1)).style.backgroundColor = "green";
+                document.getElementById("btn" + (i + 1)).style.color = "white";     
+                document.getElementById("btn" + (i + 1)).setAttribute("find","1");
             }
-            wordH.innerHTML=""; // init du wordH
-            lettersGuess += btnLetter;
-            wordH.innerHTML += wordToDevine.replace(RegExp("[^"+lettersGuess+"]" ,"g"), "·"); 
-            document.getElementById("btn" + (i + 1)).style.backgroundColor = "green";
-            document.getElementById("btn" + (i + 1)).style.color = "white";     
-            document.getElementById("btn" + (i + 1)).setAttribute("find","1");
-        }
-        else { 
-            if( (document.getElementById("btn" + (i +1)).getAttribute("find")) === "0") {  
-                alert("Letter has already been tested!")
-                count-=1; // décrémente le compteur si la lettre a déjà été testée
+            else { 
+                if( (document.getElementById("btn" + (i +1)).getAttribute("find")) === "0") { alert("Letter has already been tested!") }
+                else{
+                    count+=1;
+                    document.querySelector("img").setAttribute("src", "./assets/img/Hang"+String(count)+".png");
+                    document.getElementById("btn" + (i + 1)).style.color = "white";     
+                    document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";
+                    document.getElementById("btn" + (i + 1)).setAttribute("find","0");
+                }
             }
-            document.getElementById("btn" + (i + 1)).style.color = "white";     
-            document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";
-            document.getElementById("btn" + (i + 1)).setAttribute("find","0");
+            console.log("count = " + count)
+            console.log(wordH.textContent + " " + wordToDevine)
+            if (count === 10) { endGame("lose"); } 
+            if (wordH.textContent === wordToDevine) { endGame("win"); }
+        })
+    }
+
+    function endGame (result) {
+        if (result === "lose") { alert("HANGMAN !") }
+        if (result === "win") { alert("You Win!") }
         }
-        console.log("count = " + count)
-    })
-}
+    
 console.log(wordToDevine)
