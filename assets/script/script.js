@@ -6,6 +6,11 @@ let words = [
     "television"
 ];
 
+// 
+// let words = [
+    // "woods",
+// ];
+
 let wordH = document.getElementById("wordH");        // box mot caché
 let letters = document.getElementById("letters");   // box btn/alpha
 
@@ -23,50 +28,26 @@ for (let i = 0; i < alpha.length; i++) { letters.innerHTML += "<button id= btn" 
 // let wordHidden = wordH.textContent.split("");
 let wordGuessed = [];
 let count = 0;
+let tempRes = wordH.innerHTML.split("")
 
-    for (let i = 0; i < letters.children.length; i++) {
-        const btn = letters.children[i];
-        const btnLetter = btn.textContent;
-        wordH.innerHTML="·"
-        btn.addEventListener("click", function () {
-            count+=1;
-            if(isIt(btnLetter, wordToDevine)){
-                document.getElementById("btn" + (i + 1)).style.backgroundColor = "green";
-                document.getElementById("btn" + (i + 1)).style.color = "white";                    
-                // console.log("wordH = " + wordH.textContent[i])
-                // wordH.innerHTML = btnLetter;
-                
-                // wordH.textContent[i].replace("", btnLetter);
-
-            }
-
-            else{
-                document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";
-                document.getElementById("btn" + (i + 1)).style.color = "white";
-            }
+for (let i = 0; i < letters.children.length; i++) {
+    const btn = letters.children[i];
+    const btnLetter = btn.textContent;
+    btn.addEventListener("click", function () {
+        wordH.innerHTML="";
+        count+=1;
+        if ( wordToDevine.includes(btnLetter)){ // traitement du mot caché et couleurs bouton
+            let ind = wordToDevine.indexOf(btnLetter);
+            document.getElementById("btn" + (i + 1)).style.backgroundColor = "green";
+            document.getElementById("btn" + (i + 1)).style.color = "white";     
+            tempRes.splice(ind, 1, btnLetter)
+            wordH.innerHTML += tempRes.join("")
+        }
+        else{ // traitement du mot caché et couleurs bouton
+            wordH.innerHTML += tempRes.join("")
+            document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";
+            document.getElementById("btn" + (i + 1)).style.color = "white";
+        }
         console.log("count = " + count)
-
-        })
-
-    }
-
-function isIt(btnLetter, wordToDevine){
-    if ( wordToDevine.includes(btnLetter) ) { 
-
-        
-        // wordH.innerHTML += wordToDevine.replace(RegExp("([a-z])","g"), "·");
-        // wordToDevine[i].replace("·", btnLetter);
-        wordGuessed.push(btnLetter);
-        // console.log(wordToDevine.indexOf(btnLetter));
-        return true;
-    } 
-    // else if ( count === wordToDevine.length) {}
-    // else {
-    //     console.log(count)
-
-    //     document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";
-    //     document.getElementById("btn" + (i + 1)).style.color = "white";
-
-    // } 
-
+    })
 }
