@@ -8,13 +8,13 @@ wordH.innerHTML += wordToDevine.replace(RegExp("([a-z])", "g"), "_ "); // for (l
 
 let alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 for (let i = 0; i < alpha.length; i++) { letters.innerHTML += "<button id= btn" + (i + 1) + " value=\"" + (i + 1) + "\">" + alpha[i] + "</button>" }
+let continueGame = 1;                                                                                  // SI continueGamme...
 
 let lettersGuess = "";                                                                                      // recup les lettres deja trouvées pour la regex
 let count = 0;                                                                                              // compte le nombre de raté
 for (let i = 0; i < letters.children.length; i++) {                                                         // pour ch elem boutons
     const btn = letters.children[i];                                                                        // stocke l'ind du bouton 
     const btnLetter = btn.textContent;                                                                      // stocke la lettre du bouton
-    let continueGame = 1;                                                                                   // SI continueGamme...
     
     if (continueGame) {                                                                                     // ...est vrai.. le jeu continue...
 
@@ -28,33 +28,28 @@ for (let i = 0; i < letters.children.length; i++) {                             
                 wordH.innerHTML += wordToDevine.replace(RegExp("[^" + lettersGuess + "]", "g"), "_ ");      // remplace le _ par la lettre trouvée
                 document.getElementById("btn" + (i + 1)).style.backgroundColor = "green";                   // def style
                 document.getElementById("btn" + (i + 1)).style.color = "white";                             // def style
-                document.getElementById("btn" + (i + 1)).setAttribute("find", "1");                         // Ajout attribut 'find'
-
+                document.getElementById("btn" + (i + 1)).setAttribute("find", "1");                         // Ajout attr 'find' = true
             }
-            else    {                                                                    
-                if (wordH.textContent === wordToDevine) {
-                    endGame("win");
-                    console.log("WIN" + wordH.textContent + " " + wordToDevine)
-                    continueGame = 0;
+            else    {                                                                                       // SINON           
+                if ((wordH.textContent !== wordToDevine) && (count <= 10)){
+                    count += 1;                                                                             // incrémentation du count
+                    if (count < 10) { document.querySelector("img").setAttribute("src", "./assets/img/Hang" + String(count) + ".png"); } // ajout img pendu
+                    document.getElementById("btn" + (i + 1)).style.color = "white";                         // def style
+                    document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";                 // def style
+                    document.getElementById("btn" + (i + 1)).setAttribute("find", "0");                     // ajout attr 'find' = false
                 }
-                if ((wordH.textContent !== wordToDevine) && (count < 10)){
-                    count += 1;
-                    if (count < 10) { document.querySelector("img").setAttribute("src", "./assets/img/Hang" + String(count) + ".png"); }
-                    document.getElementById("btn" + (i + 1)).style.color = "white";
-                    document.getElementById("btn" + (i + 1)).style.backgroundColor = "red";
-                    document.getElementById("btn" + (i + 1)).setAttribute("find", "0");
-                }
-                if ((count === 10) && (wordH.textContent !== wordToDevine)) {
-                    endGame("lose");
-                    continueGame = 0;
-                }
+            }
+            if (wordH.textContent === wordToDevine ){                                                       // SI le mot caché est strictement égal au mot à trouver
+                alert("YOU WIN !");                                                                         // alert WIN
+                continueGame=0;
+                wordH.setAttribute("win","1");                                                                             // fin du jeu
+            }
+            if ( count === 10) {                                                                            // SI le count atteint 10
+                alert("YOU LOOSE !");                                                                       // alert LOOSE
+                continueGame=0;               
+                wordH.setAttribute("win","0");                                                                             // fin du jeu
+                                                                              // fin du jeu
             }
         })
     }
-    console.log("CG = " + continueGame)
-}
-function endGame(result) {
-    continueGame = 0;
-    if (result === "win") { alert("YOU WIN !"); }
-    if (result === "lose") { alert("YOU LOOSE !"); }
 }
