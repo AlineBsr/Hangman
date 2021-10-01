@@ -1,0 +1,79 @@
+/* Flexbox container */
+
+.container-flex {
+    margin: auto;
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+#hangman{
+    display:flex;  
+    justify-content: center;
+    & img{   width:40%; 
+        justify-content: space-around;
+    }
+}
+
+#wordH { 
+    margin: auto;
+    font-size: 3rem;
+    font-variant: small-caps;
+    padding-bottom:1rem;
+    color:white;
+} 
+#count{ 
+    width:10%;
+    font-size: 1.2rem;
+}
+
+#letters{ 
+    width:55%;
+    align-self: center;
+    justify-items: start;
+    flex-direction: row;
+}
+
+#replay{ width: 30%;
+    margin-top:1rem;
+}
+
+.header-flex{
+    display:flex;
+    font-weight: lighter;
+
+    flex-direction: column;
+    align-items: center;
+}
+
+button{
+    font-family: 'Special Elite', cursive;
+    color:rgb(201, 201, 201);
+    background-color: rgb(32, 32, 32);
+    border:hidden;
+    border-radius: 1rem;
+    width: 3rem;
+    font-size: 1.5rem;
+    padding:0.3rem;
+    margin: 0.3rem;
+    &:hover{ box-shadow:white 2px 2px 2px; }
+}
+
+footer{
+    padding-top:5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color:rgb(201, 201, 201);
+}
+
+body{
+    background-color:rgb(48, 48, 48);
+    font-family: 'Special Elite', cursive;
+    letter-spacing: 0.25rem;
+    color : rgb(226, 226, 226);
+}
