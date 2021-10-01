@@ -1,0 +1,82 @@
+/* Flexbox container */
+.container-flex {
+  margin: auto;
+  width: 50%;
+  height: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+}
+
+#hangman {
+  display: flex;
+  justify-content: center;
+}
+#hangman img {
+  width: 40%;
+  justify-content: space-around;
+}
+
+#wordH {
+  margin: auto;
+  font-size: 3rem;
+  font-variant: small-caps;
+  padding-bottom: 1rem;
+  color: white;
+}
+
+#count {
+  width: 10%;
+  font-size: 1.2rem;
+}
+
+#letters {
+  width: 55%;
+  align-self: center;
+  justify-items: start;
+  flex-direction: row;
+}
+
+#replay {
+  width: 30%;
+  margin-top: 1rem;
+}
+
+.header-flex {
+  display: flex;
+  font-weight: lighter;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  font-family: "Special Elite", cursive;
+  color: #c9c9c9;
+  background-color: #202020;
+  border: hidden;
+  border-radius: 1rem;
+  width: 3rem;
+  font-size: 1.5rem;
+  padding: 0.3rem;
+  margin: 0.3rem;
+}
+button:hover {
+  box-shadow: white 2px 2px 2px;
+}
+
+footer {
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: #c9c9c9;
+}
+
+body {
+  background-color: #303030;
+  font-family: "Special Elite", cursive;
+  letter-spacing: 0.25rem;
+  color: #e2e2e2;
+}/*# sourceMappingURL=style.css.map */
