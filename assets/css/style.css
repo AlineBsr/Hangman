@@ -1,26 +1,41 @@
+/* Flexbox container */
 .container-flex {
   margin: auto;
   width: 50%;
   height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  align-items: center;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 1rem;
 }
 
 #hangman {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
+
 #hangman img {
   width: 10rem;
   background-color: darkgray;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 #wordH {
-  margin: auto;a
+  margin: auto;
   font-size: 3rem;
   font-variant: small-caps;
   padding-bottom: 1rem;
@@ -34,9 +49,14 @@
 
 #letters {
   width: 55%;
-  align-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
   justify-items: start;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   padding-bottom: 1rem;
 }
 
@@ -46,14 +66,21 @@
 }
 
 .header-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   font-weight: lighter;
-  flex-direction: column;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 button {
-  font-family: "Special Elite", cursive;
+  font-family: 'Special Elite', cursive;
   color: #c9c9c9;
   background-color: #202020;
   border: hidden;
@@ -63,21 +90,29 @@ button {
   padding: 0.3rem;
   margin: 0.3rem;
 }
+
 button:hover {
-  box-shadow: white 2px 2px 2px;
+  -webkit-box-shadow: white 2px 2px 2px;
+          box-shadow: white 2px 2px 2px;
 }
 
 footer {
   padding-top: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   color: #c9c9c9;
 }
 
 body {
   background-color: #303030;
-  font-family: "Special Elite", cursive;
+  font-family: 'Special Elite', cursive;
   letter-spacing: 0.25rem;
   color: #e2e2e2;
 }
@@ -86,16 +121,14 @@ body {
   figure > img {
     width: 10rem;
   }
-
   #letters {
     width: 20rem;
   }
-
   #count {
     font-size: 1rem;
   }
-
   #wordH {
     font-size: 2rem;
   }
-}/*# sourceMappingURL=style.css.map */
+}
+/*# sourceMappingURL=style.css.map */
